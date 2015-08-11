@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import static net.minecraftforge.common.util.ForgeDirection.EAST;
@@ -32,6 +12,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.src.*;
 import net.minecraft.tileentity.TileEntity;
@@ -134,6 +115,7 @@ public class BlockDragonEggRed extends BlockContainer
 			var6.setLocationAndAngles((double)par2 + 0.5D, (double)par3, (double)par4 + 0.5D, 0.0F, 0.0F);
 			par1World.spawnEntityInWorld(var6);
 			var6.spawnExplosionParticle();
+			par1World.setBlock(par2, par3, par4, Blocks.air);
 			return true;
     	}
     }

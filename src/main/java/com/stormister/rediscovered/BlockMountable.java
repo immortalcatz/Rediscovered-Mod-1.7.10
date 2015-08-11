@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import java.util.List;
@@ -48,13 +28,13 @@ public class BlockMountable extends Block
 	@Override
 	public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int par6, float par7, float par8, float par9)
     {
-		return onBlockActivated(world, i, j, k, entityplayer, 0.5F, 1.0F, 0.5F, 0, 0, 0, 0);
+		return onBlockActivated(world, i, j, k, entityplayer, 0.5F, 0.5F, 0.5F, 0, 0, 0, 0);
     }
 	
 	//Use this method for a custom mounting height.
 	public static boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, float y)
     {
-		return onBlockActivated(world, i, j, k, entityplayer, 0.5F, y, 0.5F, 0, 0, 0, 0);
+		return onBlockActivated(world, i, j, k, entityplayer, 0.5F, 0.5F, 0.5F, 0, 0, 0, 0);
     }
     
 	//This is the main onBlockActivated method. Use it for fully custom mounting positions.

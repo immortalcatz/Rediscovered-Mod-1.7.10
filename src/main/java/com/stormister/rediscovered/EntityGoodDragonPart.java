@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import net.minecraft.entity.Entity;
@@ -25,6 +5,7 @@ import net.minecraft.entity.IEntityMultiPart;
 import net.minecraft.entity.boss.EntityDragonPart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 
 public class EntityGoodDragonPart extends Entity
@@ -74,17 +55,12 @@ public class EntityGoodDragonPart extends Entity
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    @Override
+    public boolean interactFirst(EntityPlayer par1EntityPlayer)
     {
-    	//ModLoader.getMinecraftInstance().thePlayer.addChatMessage("MESSAGE");
-    	par1EntityPlayer.rotationYaw = this.rotationYaw;
-        par1EntityPlayer.rotationPitch = this.rotationPitch;
-
-        if (!this.worldObj.isRemote && (this.riddenByEntity == null || this.riddenByEntity == par1EntityPlayer))
-        {
-            par1EntityPlayer.mountEntity(this);
-        }
-        return true;
+//    	par1EntityPlayer.addChatComponentMessage(new ChatComponentTranslation("You right clicked me! Ah!", new Object[0]));
+    	entityDragonObj.mount(par1EntityPlayer);
+    	return true;
     }
 
     /**

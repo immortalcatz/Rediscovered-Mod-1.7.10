@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import java.util.Random;
@@ -52,23 +32,18 @@ public class BlockAbsorb extends Block
         return 5;
     }
 
-    public byte getType(World world, int i, int j, int k)
-    {
-        return (byte)world.getBlockMetadata(i, j, k);
-    }
-
     public byte getRadius(World world, int i, int j, int k)
     {
-        return (byte)(getType(world, i, j, k) == 0 || getType(world, i, j, k) == 1 ? 4 : 6);
+        return (byte)6;
     }
 
-    public int makeStill(World world, int i, int j, int k, byte byte0)
+    public int makeStill(World world, int i, int j, int k)
     {
         Material material = world.getBlock(i, j, k).getMaterial();
 
-        if (material == Material.water && (byte0 == 0 || byte0 == 2) && !world.getBlock(i, j, k).equals(Blocks.water))
+        if (material == Material.water && !world.getBlock(i, j, k).equals(Blocks.water))
         {
-            world.setBlock(i, j, k, Blocks.water);
+            world.setBlock(i, j, k, Blocks.water, 0, 0);
             return 1;
         }
         else
@@ -77,11 +52,11 @@ public class BlockAbsorb extends Block
         }
     }
 
-    public int absorbBlock(World world, int i, int j, int k, byte byte0)
+    public int absorbBlock(World world, int i, int j, int k)
     {
         Material material = world.getBlock(i, j, k).getMaterial();
 
-        if (material == Material.water && (byte0 == 0 || byte0 == 2))
+        if (material == Material.water)
         {
             world.setBlock(i, j, k, Blocks.air);
             return 1;
@@ -120,21 +95,10 @@ public class BlockAbsorb extends Block
         modifyWorld(world, i, j, k, true);
         world.scheduleBlockUpdate(i, j, k, this, tickRate());
     }
-
-//    /**
-//     * Called upon block activation (left or right click on the block.). The three integers represent x,y,z of the
-//     * block.
-//     */
-//    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
-//    {
-//        world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
-//        return true;
-//    }
-
+    
     public void modifyWorld(World world, int i, int j, int k, boolean flag)
     {
         byte byte0 = getRadius(world, i, j, k);
-        byte byte1 = getType(world, i, j, k);
         int l = 0;
 
         for (int i1 = i - byte0; i1 <= i + byte0; i1++)
@@ -145,13 +109,13 @@ public class BlockAbsorb extends Block
                 {
                     if (k1 > k - byte0 && k1 < k + byte0 && j1 > j - byte0 && j1 < j + byte0 && i1 > i - byte0 && i1 < i + byte0 && flag)
                     {
-                        l += absorbBlock(world, i1, j1, k1, byte1);
+                        l += absorbBlock(world, i1, j1, k1);
                         continue;
                     }
 
                     if (flag)
                     {
-                        l += makeStill(world, i1, j1, k1, byte1);
+                        l += makeStill(world, i1, j1, k1);
                         continue;
                     }
 

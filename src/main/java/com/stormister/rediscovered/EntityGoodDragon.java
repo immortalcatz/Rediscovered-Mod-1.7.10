@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import cpw.mods.fml.relauncher.Side;
@@ -46,12 +26,13 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, IEntityMultiPartRed, IMob
+public class EntityGoodDragon extends EntityLiving implements IEntityMultiPartRed, IMob
 {
     public double targetX;
     public double targetY;
@@ -99,7 +80,7 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
     public boolean angry = false;
     public boolean renderTailSpike = false;
     
-    public int health = 150;
+    public int health = 100;
 
     /**
      * Activated if the dragon is flying though obsidian, white stone or bedrock. Slows movement and animation speed.
@@ -126,7 +107,7 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(150.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(100.0D);
     }
 
     protected void entityInit()
@@ -413,10 +394,10 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
                 entitydragonpart.setLocationAndAngles(this.posX - (double)((f11 * f17 + f15 * f18) * f2), this.posY + (adouble2[1] - adouble[1]) * 1.0D - (double)((f18 + f17) * f9) + 1.5D, this.posZ + (double)((f12 * f17 + f16 * f18) * f2), 0.0F, 0.0F);
             }
 
-            if (!this.worldObj.isRemote)
-            {
-                this.slowed = this.destroyBlocksInAABB(this.dragonPartHead.boundingBox) | this.destroyBlocksInAABB(this.dragonPartBody.boundingBox);
-            }
+//            if (!this.worldObj.isRemote)
+//            {
+//                this.slowed = this.destroyBlocksInAABB(this.dragonPartHead.boundingBox) | this.destroyBlocksInAABB(this.dragonPartBody.boundingBox);
+//            }
         }
     }
 
@@ -548,22 +529,28 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
     {
         return (float)MathHelper.wrapAngleTo180_double(par1);
     }
-    
+    //TODO
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    public boolean interact(EntityPlayer par1EntityPlayer)
+    public boolean mount(EntityPlayer par1EntityPlayer)
     {
-    	//ModLoader.getMinecraftInstance().thePlayer.addChatMessage("MESSAGE");
     	par1EntityPlayer.rotationYaw = this.rotationYaw;
         par1EntityPlayer.rotationPitch = this.rotationPitch;
 
         if (!this.worldObj.isRemote && (this.riddenByEntity == null || this.riddenByEntity == par1EntityPlayer))
         {
-        	//ModLoader.getMinecraftInstance().thePlayer.addChatMessage("MESSAGE");
             par1EntityPlayer.mountEntity(this);
         }
         return true;
+    }
+    
+    public void updateRiderPosition()
+    {
+	    if (this.riddenByEntity != null)
+	    {
+		    this.riddenByEntity.setPosition(this.posX, this.posY + this.getMountedYOffset() + this.riddenByEntity.getYOffset()-2.5, this.posZ);
+	    }
     }
 
     /**
@@ -617,6 +604,7 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
 
     public boolean attackEntityFromPart(EntityGoodDragonPart par1EntityGoodDragonPart, DamageSource par2DamageSource, float par3)
 	{
+    	
 		if (par1EntityGoodDragonPart != this.dragonPartHead)
 		{
 			par3 = par3 / 4 + 1;
@@ -650,6 +638,11 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
 	protected boolean func_82195_e(DamageSource par1DamageSource, float par2)
     {
         return super.attackEntityFrom(par1DamageSource, par2);
+    }
+	@Override
+	public boolean isEntityInsideOpaqueBlock()
+    {
+		return false;
     }
 
     /**
@@ -749,6 +742,7 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
                             this.worldObj.setBlock(var6, var5, var7, Blocks.fire);
                         }
                     }
+                    
                 }
             }
         }
@@ -765,6 +759,7 @@ public class EntityGoodDragon extends EntityLiving implements IBossDisplayData, 
      */
     protected void despawnEntity() {}
 
+    
     /**
      * Return the Entity parts making up this Entity (currently only for dragons)
      */

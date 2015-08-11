@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import net.minecraft.block.Block;
@@ -41,6 +21,7 @@ public class EntityMountableBlock extends Entity
 	protected int orgBlockPosY;
 	protected int orgBlockPosZ;
 	protected Block orgBlockID;
+	protected float blahx, blahy, blahz;
 	
 	public EntityMountableBlock (World world)
 	{
@@ -75,6 +56,9 @@ public class EntityMountableBlock extends Entity
     	orgBlockPosZ = k;
     	orgBlockID = world.getBlock(i, j, k);
     	
+    	blahx = mountingX;
+    	blahy = mountingY;
+    	blahz = mountingZ;
     	setPosition(mountingX, mountingY, mountingZ);
 	}
 	
@@ -104,8 +88,17 @@ public class EntityMountableBlock extends Entity
         {
 			this.setDead();
         }
+        if ((this.posY == Math.floor(this.posY)) && !Double.isInfinite(this.posY)) {
+            this.posY-=0.5F;
+        }
         ticksExisted++;
         this.worldObj.theProfiler.endSection();
+    }
+    
+    @Override
+    public boolean canBePushed()
+    {
+        return false;
     }
     
     //The following methods are required by the Entity class but I don't know what they are for.

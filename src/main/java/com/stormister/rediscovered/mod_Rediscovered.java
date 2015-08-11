@@ -1,23 +1,3 @@
-//	  Copyright 2012-2014 Matthew Karcz
-//
-//	  This file is part of The Rediscovered Mod.
-//
-//    The Rediscovered Mod is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    The Rediscovered Mod is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with The Rediscovered Mod.  If not, see <http://www.gnu.org/licenses/>.
-
-
-
-
 package com.stormister.rediscovered;
 
 import java.util.HashMap;
@@ -84,8 +64,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
+import net.minecraft.world.biome.WorldChunkManager;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.config.*;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.util.*;
@@ -94,6 +77,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.common.BiomeDictionary.Type;
 
 import org.lwjgl.input.Keyboard;
 
@@ -115,22 +99,11 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
  
-@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.0")
-
-
+@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.1")
 
 /*
- * TO-DO for next update
- * -Table Inventory
- * -Lectern Something
- * -Crying Obsidian Spawn point
- * -Fix Ruby and Undead horse spawning
- */
-
-/*
- * TO-DO for future updates
- * -Better Red Dragon
- * -Brick Pyramids
+ * Current Changelog - 1.2
+ * -Locked Chest URL leads to identical April Fools page
  */
 
 
@@ -169,7 +142,6 @@ public class mod_Rediscovered
     public static Item Blindness;
     public static Item Mining;
     public static Item NauseaSplash;
-    public static Item JumpSplash;
     public static Item BlindnessSplash;
     public static Item MiningSplash;
     public static Block Sponge;
@@ -212,10 +184,25 @@ public class mod_Rediscovered
     public static int SkyChickenSpawn;
     public static int GiantSpawn;
     public static int FishSpawn;
+    public static int PurpleArrowID;
+    public static int MountableBlockID;
+    public static int RanaID;
+    public static int SteveID;
+    public static int BlackSteveID;
+    public static int BeastBoyID;
+    public static int PigmanID;
+    public static int MeleePigmanID;
+    public static int RangedPigmanID;
+    public static int GreenVillagerID;
+    public static int SkyChickenID;
+    public static int GiantID;
+    public static int FishID;
+    public static int ZombieHorseID;
+    public static int SkeletonHorseID;
+    public static int ScarecrowID;
+    public static int RedDragonID;
     public static int DimID;
     public static int HeavenBiomeID;
-    public static boolean addToDefault;
-    public static boolean biomeSkyGen;
     public static boolean EnablePigmanVillages;
     public static boolean EnableSpongeGenerate;
     public static boolean EnableDungeonLoot;
@@ -233,21 +220,9 @@ public class mod_Rediscovered
     public static boolean DreamBedEnabled;
     public static boolean DreamPillowRecipe;
     public static boolean DaytimeBed;
-    public static int ParrowID;
-    public static int MountBlockID;
-    public static int RanaID;
-    public static int SteveID;
-    public static int BlackSteveID;
-    public static int BeastBoyID;
-    public static int GiantID;
-    public static int SkyChickenID;
-    public static int FishID;
-    public static int PigmanID;
-    public static int GVillagerID;
-    public static int ZombieHorseID;
-    public static int SkeletonHorseID;
-    public static int ScarecrowID;
-    public static int RedDragonID;
+    
+    public static int nextID = 0;
+    
     public static final String rana = new String(mod_Rediscovered.modid + ":" + "textures/models/rana.png");
     public static final String steve = new String(mod_Rediscovered.modid + ":" + "textures/models/Steve");
     public static final String blacksteve = new String(mod_Rediscovered.modid + ":" + "textures/models/BlackSteve");
@@ -271,23 +246,25 @@ public class mod_Rediscovered
         c.load();
 
         //IDs
-        ParrowID = c.get("Entities", "Purple Arrow ID", 88).getInt();
-        MountBlockID = c.get("Entities", "Mountable Block ID", 78).getInt();
-        RanaID = c.get("Entities", "Rana ID", 67).getInt();
-        SteveID = c.get("Entities", "Steve ID", 69).getInt();
-        BlackSteveID = c.get("Entities", "Black Steve ID", 79).getInt();
-        BeastBoyID = c.get("Entities", "Beast Boy ID", 80).getInt();
-        GiantID = c.get("Entities", "Giant ID", 81).getInt();
-        SkyChickenID = c.get("Entities", "Sky Chicken ID", 68).getInt();
-        FishID = c.get("Entities", "Fish ID", 72).getInt();
-        PigmanID = c.get("Entities", "Pigman ID", 82).getInt();
-        GVillagerID = c.get("Entities", "Green Villager ID", 73).getInt();
-        ZombieHorseID = c.get("Entities", "Zombie Horse ID", 76).getInt();
-        SkeletonHorseID = c.get("Entities", "Skeleton Horse ID", 77).getInt();
-        ScarecrowID = c.get("Entities", "Scarecrow Entity ID", 89).getInt();
-        RedDragonID = c.get("Entities", "Red Dragon ID", 74).getInt();
-        DimID = c.get("Dimension", "Sky Dimension ID", 23).getInt();
-        HeavenBiomeID = c.get("Dimension", "Sky Biome ID", 26).getInt();
+        PurpleArrowID = c.get("ID's", "Purple Arrow ID (-1 means it will automatically assign an ID)", -1).getInt();
+        MountableBlockID = c.get("ID's", "Mountable Block ID (-1 means it will automatically assign an ID)", -1).getInt();
+        RanaID = c.get("ID's", "Rana ID (-1 means it will automatically assign an ID)", -1).getInt();
+        SteveID = c.get("ID's", "Steve ID (-1 means it will automatically assign an ID)", -1).getInt();
+        BlackSteveID = c.get("ID's", "Black Steve ID (-1 means it will automatically assign an ID)", -1).getInt();
+        BeastBoyID = c.get("ID's", "Beast Boy ID (-1 means it will automatically assign an ID)", -1).getInt();
+        PigmanID = c.get("ID's", "Pigman ID (-1 means it will automatically assign an ID)", -1).getInt();
+        MeleePigmanID = c.get("ID's", "Melee Pigman ID (-1 means it will automatically assign an ID)", -1).getInt();
+        RangedPigmanID = c.get("ID's", "Ranged Pigman ID (-1 means it will automatically assign an ID)", -1).getInt();
+        GreenVillagerID = c.get("ID's", "Green Villager ID (-1 means it will automatically assign an ID)", -1).getInt();
+        SkyChickenID = c.get("ID's", "Sky Chicken ID (-1 means it will automatically assign an ID)", -1).getInt();
+        GiantID = c.get("ID's", "Giant ID (-1 means it will automatically assign an ID)", -1).getInt();
+        FishID = c.get("ID's", "Fish ID (-1 means it will automatically assign an ID)", -1).getInt();
+        ZombieHorseID = c.get("ID's", "Zombie Horse ID (-1 means it will automatically assign an ID)", -1).getInt();
+        SkeletonHorseID = c.get("ID's", "Skeleton Horse ID (-1 means it will automatically assign an ID)", -1).getInt();
+        ScarecrowID = c.get("ID's", "Scarecrow ID (-1 means it will automatically assign an ID)", -1).getInt();
+        RedDragonID = c.get("ID's", "Red Dragon ID (-1 means it will automatically assign an ID)", -1).getInt();
+        DimID = c.get("ID's", "Sky Dimension ID", 23).getInt();
+        HeavenBiomeID = c.get("ID's", "Sky Biome ID", 153).getInt();
         
         //Booleans
         EnableSpongeGenerate = c.get("Options", "Enable Sponges Appear in Ocean", true).getBoolean(true);
@@ -314,7 +291,6 @@ public class mod_Rediscovered
         DreamPillowRecipe = c.get("Options", "Enable Dream Pillow recipe (Only applies if Dream Bed method is disabled)", false).getBoolean(false);
         DreamChance = c.get("Options", "Percent chance out of 100 of going to Sky Dimension on sleep. Only applies if Dream Bed Method is disabled", 12).getInt();
         DaytimeBed = c.get("Options", "Can go to Sky Dimension without Restrictions (Daytime, Monsters nearby).", false).getBoolean(false);
-        biomeSkyGen = c.get("Options", "Enable Heaven (Don't mess with this unless I explicitely state it)", true).getBoolean(false);
         c.save();
         
         /*
@@ -389,23 +365,23 @@ public class mod_Rediscovered
         
         heaven = (new BiomeGenSky(HeavenBiomeID)).setColor(16421912).setBiomeName("Heaven").setDisableRain();
 
-        EntityRegistry.registerModEntity(EntityParrow.class, "Parrow", ParrowID, this, 64, 20, false);
-        EntityRegistry.registerModEntity(EntityMountableBlock.class, "EntityMountableBlock", MountBlockID, this, 250, 5, false);
-        EntityRegistry.registerGlobalEntityID(EntityRana.class, "Rana", RanaID, 0x4c7129, 0xf0a5a2);
-        EntityRegistry.registerGlobalEntityID(EntitySteve.class, "Steve", SteveID, 44975, 0xf6b201);
-        EntityRegistry.registerGlobalEntityID(EntityBlackSteve.class, "BlackSteve", BlackSteveID, 10489616, 894731);
-        EntityRegistry.registerGlobalEntityID(EntityBeastBoy.class, "BeastBoy", BeastBoyID, 0x9932cc, 5349438);
-        EntityRegistry.registerGlobalEntityID(EntityPigman.class, "Pigman", PigmanID, 0xf0a5a2, 0xa1a1a1);
-        EntityRegistry.registerGlobalEntityID(EntityMeleePigman.class, "MeleePigman", 83, 0xf0a5a2, 0xa1a1a1);
-        EntityRegistry.registerGlobalEntityID(EntityRangedPigman.class, "RangedPigman", 84, 0xf0a5a2, 0xa1a1a1);
-        EntityRegistry.registerGlobalEntityID(EntityGreenVillager.class, "GreenVillager", GVillagerID, 5651507, 7969893);
-        EntityRegistry.registerGlobalEntityID(EntitySkyChicken.class, "SkyChicken", SkyChickenID);
-        EntityRegistry.registerGlobalEntityID(EntityGiant.class, "GiantZombie", GiantID, 2243405, 7969893);
-        EntityRegistry.registerGlobalEntityID(EntityFish.class, "Fish", FishID, 44975, 2243405);
-        EntityRegistry.registerGlobalEntityID(EntityZombieHorse.class, "ZombieHorse", ZombieHorseID, 0x4c7129, 15656192);
-        EntityRegistry.registerGlobalEntityID(EntitySkeletonHorse.class, "SkeletonHorse", SkeletonHorseID, 12698049, 15656192);
-        EntityRegistry.registerGlobalEntityID(EntityScarecrow.class, "Scarecrow", ScarecrowID);
-        EntityRegistry.registerGlobalEntityID(EntityGoodDragon.class, "RedDragon", RedDragonID);
+        registerRediscoveredMob(EntityParrow.class, "ParrowRediscovered", PurpleArrowID);
+        registerRediscoveredMob(EntityMountableBlock.class, "EntityMountableBlockRediscovered", MountableBlockID);
+        registerRediscoveredMob(EntityRana.class, "RanaRediscovered", 0x4c7129, 0xf0a5a2, RanaID);
+        registerRediscoveredMob(EntitySteve.class, "SteveRediscovered", 44975, 0xf6b201, SteveID);
+        registerRediscoveredMob(EntityBlackSteve.class, "BlackSteveRediscovered", 10489616, 894731, BlackSteveID);
+        registerRediscoveredMob(EntityBeastBoy.class, "BeastBoyRediscovered", 0x9932cc, 5349438, BeastBoyID);
+        registerRediscoveredMob(EntityPigman.class, "PigmanRediscovered", 0xf0a5a2, 0xa1a1a1, PigmanID);
+        registerRediscoveredMob(EntityMeleePigman.class, "MeleePigmanRediscovered", 0xf0a5a2, 0xa1a1a1, MeleePigmanID);
+        registerRediscoveredMob(EntityRangedPigman.class, "RangedPigmanRediscovered", 0xf0a5a2, 0xa1a1a1, RangedPigmanID);
+        registerRediscoveredMob(EntityGreenVillager.class, "GreenVillagerRediscovered", 5651507, 7969893, GreenVillagerID);
+        registerRediscoveredMob(EntitySkyChicken.class, "SkyChickenRediscovered", SkyChickenID);
+        registerRediscoveredMob(EntityGiant.class, "GiantZombieRediscovered", 2243405, 7969893, GiantID);
+        registerRediscoveredMob(EntityFish.class, "FishRediscovered", 44975, 2243405, FishID);
+        registerRediscoveredMob(EntityZombieHorse.class, "ZombieHorseRediscovered", 0x4c7129, 15656192, ZombieHorseID);
+        registerRediscoveredMob(EntitySkeletonHorse.class, "SkeletonHorseRediscovered", 12698049, 15656192, SkeletonHorseID);
+        registerRediscoveredMob(EntityScarecrow.class, "ScarecrowRediscovered", ScarecrowID);
+        registerRediscoveredMob(EntityGoodDragon.class, "RedDragonRediscovered", RedDragonID);
         
         MinecraftForge.EVENT_BUS.register(new com.stormister.rediscovered.RediscoveredEventHandler());
         proxy.registerRenderThings();
@@ -620,6 +596,10 @@ public class mod_Rediscovered
         
         DimensionManager.registerProviderType(DimID, WorldProviderHeaven.class, true);
         DimensionManager.registerDimension(DimID, DimID);
+        BiomeManager.removeSpawnBiome(heaven);
+        BiomeManager.removeStrongholdBiome(heaven);
+        BiomeManager.removeVillageBiome(heaven);
+        WorldChunkManager.allowedBiomes.remove(heaven);
         
         if(EnableRubyOre)
         {
@@ -656,6 +636,35 @@ public class mod_Rediscovered
         
         return block;
     }
+    public static void registerRediscoveredMob(Class<? extends Entity> var0, String var1, int id)
+    {
+    	if(id == -1){
+    		int newID = EntityRegistry.instance().findGlobalUniqueEntityId();
+        	EntityRegistry.registerModEntity(var0, var1, nextInternalID(), mod_Rediscovered.instance, 80, 3, true);
+    	}
+    	else
+    	{
+    		EntityRegistry.registerModEntity(var0, var1, id, mod_Rediscovered.instance, 80, 3, true);
+    	}
+    }
+    public static void registerRediscoveredMob(Class<? extends Entity> var0, String var1, int back, int fore, int id)
+    {
+    	if(id == -1){
+    		int newID = EntityRegistry.instance().findGlobalUniqueEntityId();
+    		EntityRegistry.registerGlobalEntityID(var0, var1, newID, back, fore);
+    		EntityRegistry.registerModEntity(var0, var1, nextInternalID(), mod_Rediscovered.instance, 80, 3, true);
+    	}
+    	else
+    	{
+    		EntityRegistry.registerGlobalEntityID(var0, var1, id, back, fore);
+    		EntityRegistry.registerModEntity(var0, var1, id, mod_Rediscovered.instance, 80, 3, true);
+    	}
+    }
+    public static int nextInternalID()
+    {
+    	mod_Rediscovered.nextID++;
+    	return mod_Rediscovered.nextID - 1;
+    }
     
     public static boolean hasLitLanternOnHotbar(InventoryPlayer inv)
     {
@@ -679,7 +688,7 @@ public class mod_Rediscovered
 
     public String getVersion()
     {
-        return "1.7.2";
+        return "1.7.10";
     }
 
 	
