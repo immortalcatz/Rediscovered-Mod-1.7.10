@@ -104,6 +104,7 @@ import cpw.mods.fml.relauncher.Side;
 /*
  * Current Changelog - 1.2
  * -Locked Chest URL leads to identical April Fools page
+ * -Tidied up code
  */
 
 
