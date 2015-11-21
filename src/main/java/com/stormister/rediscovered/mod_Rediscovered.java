@@ -99,7 +99,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
  
-@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.1")
+@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.2")
 
 /*
  * Current Changelog - 1.2
