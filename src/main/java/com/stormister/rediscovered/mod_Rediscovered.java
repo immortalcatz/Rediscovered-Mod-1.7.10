@@ -104,7 +104,7 @@ import cpw.mods.fml.relauncher.Side;
 /*
  * Current Changelog - 1.2
  * -Locked Chest URL leads to identical April Fools page
- * -Added French, Spanish, and Hungarian translation
+ * -Added French, Spanish, Traditional Chinese, and Hungarian translation
  * -Added option to disable quiver
  * -Tidied up code
  */
