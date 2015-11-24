@@ -99,14 +99,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
  
-@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.2")
+@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.2.1")
 
 /*
- * Current Changelog - 1.2
- * -Locked Chest URL leads to identical April Fools page
- * -Added French, Spanish, Traditional Chinese, and Hungarian translation
- * -Added option to disable quiver
- * -Tidied up code
+ * Current Changelog - 1.2.1
  */
 
 
