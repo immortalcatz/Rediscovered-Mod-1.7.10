@@ -137,12 +137,7 @@ public class mod_Rediscovered
     public static Item LeatherChainChest;
     public static Item LeatherChainLegs;
     public static Item LeatherChainBoots;
-    public static Item Nausea;
-    public static Item Blindness;
-    public static Item Mining;
-    public static Item NauseaSplash;
-    public static Item BlindnessSplash;
-    public static Item MiningSplash;
+    public static Item RediscoveredPotion;
     public static Block Sponge;
     public static Block RubyOre;
     public static Block RubyBlock;
@@ -326,9 +321,7 @@ public class mod_Rediscovered
         RubyOre = (new BlockRubyOre("rubyore")).setHardness(3F).setResistance(5F).setStepSound(Block.soundTypeStone).setBlockName("RubyOre").setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName(modid + ":" + "rubyore");
         gemRuby = (new ItemRuby("Ruby")).setUnlocalizedName("gemRuby").setCreativeTab(CreativeTabs.tabMaterials).setTextureName(modid + ":Ruby");
         RubyBlock = (new BlockRuby("rubyblock")).setHardness(5F).setResistance(10F).setStepSound(Block.soundTypeStone).setBlockName("RubyBlock").setCreativeTab(CreativeTabs.tabBlock).setBlockTextureName(modid + ":" + "rubyblock");
-        Nausea = (new ItemNauseaPotion(0, 1.0F, false, "nausea")).setUnlocalizedName("nausea").setTextureName(modid + ":nausea");
-        Mining = (new ItemMiningPotion(0, 1.0F, false, "mining")).setUnlocalizedName("mining").setTextureName(modid + ":mining");
-        Blindness = (new ItemBlindnessPotion(0, 1.0F, false, "blindness")).setUnlocalizedName("blindness").setTextureName(modid + ":blindness");
+        RediscoveredPotion = (new ItemPotionRediscovered()).setUnlocalizedName("rediscoveredpotion").setTextureName(modid + ":rediscoveredpotion");
         Lantern = new BlockLantern().setBlockName("blockLantern");
         LanternPhys = new BlockLanternPhys("lantern").setBlockName("blockLanternphys").setBlockTextureName(modid + ":" + "lantern");
         ItemLantern = new ItemLantern("Lantern").setUnlocalizedName("itemLantern").setTextureName(modid + ":Lantern");
@@ -534,22 +527,34 @@ public class mod_Rediscovered
                     "L", 'L', RubyBlock
                 }));
         
-        GameRegistry.registerItem(Nausea, "rediscovered_nausea");
-        GameRegistry.addShapelessRecipe(new ItemStack(Nausea, 1), new Object[]
+        GameRegistry.registerItem(RediscoveredPotion, "rediscovered_potion");
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 0), new Object[]
                 {
                     Items.rotten_flesh, new ItemStack(Items.potionitem, 1, 16)
                 });
         
-        GameRegistry.registerItem(Blindness, "rediscovered_blindness");
-        GameRegistry.addShapelessRecipe(new ItemStack(Blindness, 1), new Object[]
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 1), new Object[]
                 {
                     Items.poisonous_potato, new ItemStack(Items.potionitem, 1, 16)
                 });
         
-        GameRegistry.registerItem(Mining, "rediscovered_mining");
-        GameRegistry.addShapelessRecipe(new ItemStack(Mining, 1), new Object[]
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 2), new Object[]
                 {
                     Items.apple, new ItemStack(Items.potionitem, 1, 16)
+                });
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 100), new Object[]
+                {
+                    Items.gunpowder, new ItemStack(RediscoveredPotion, 1, 0)
+                });
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 101), new Object[]
+                {
+                    Items.gunpowder, new ItemStack(RediscoveredPotion, 1, 1)
+                });
+        
+        GameRegistry.addShapelessRecipe(new ItemStack(RediscoveredPotion, 1, 102), new Object[]
+                {
+                    Items.gunpowder, new ItemStack(RediscoveredPotion, 1, 2)
                 });
         
         GameRegistry.addRecipe(new ItemStack(DirtSlab, 6), new Object[]
