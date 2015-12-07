@@ -42,10 +42,9 @@ item.DreamPillow.name=Poduszka
 item.ItemGear.name=Koło zębate
 item.nausea.name=Misktura nudności
 item.blindness.name=Mikstura ślepoty
-item.mining.name=Misktura zmęczenia
+item.dullness.name=Misktura zmęczenia
 item.jump.name=Mikstura skoku
 item.Scarecrow.name=Strach na wróble
-
 entity.RanaRediscovered.name=Rana
 entity.SteveRediscovered.name=Steve
 entity.BlackSteveRediscovered.name=Black Steve
