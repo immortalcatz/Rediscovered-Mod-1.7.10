@@ -99,10 +99,12 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
  
-@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.2.1")
+@Mod(modid = mod_Rediscovered.modid, name = "Minecraft Rediscovered Mod", version = "1.3")
 
 /*
- * Current Changelog - 1.2.1
+ * Current Changelog - 1.3
+ * -Added splash potions and changed how current potions work
+ * -Removed dream bed option entirely
  */
 
 
@@ -164,8 +166,6 @@ public class mod_Rediscovered
     public static Block Lectern;
     public static Block LecternOpen;
     public static Item DreamPillow;
-    public static Item DreamBedItem;
-    public static Block DreamBed;
     public static Block Lantern;
     public static Block LanternPhys;
     public static Item ItemLantern;    
@@ -212,7 +212,6 @@ public class mod_Rediscovered
     public static boolean BlackSteveHostile;
     public static boolean BeastBoyHostile;
     public static boolean ScarecrowAttractsMobs;
-    public static boolean DreamBedEnabled;
     public static boolean DreamPillowRecipe;
     public static boolean DaytimeBed;
     
@@ -283,7 +282,6 @@ public class mod_Rediscovered
         GiantSpawn = c.get("Options", "Giant Spawn Rate", 150).getInt();
         FishSpawn = c.get("Options", "Fish Spawn Rate", 150).getInt();
         ScarecrowAttractsMobs = c.get("Options", "Scarecrow attracts zombies (True by default. Set to false to have zombies avoid scarecrows)", true).getBoolean(true);
-        DreamBedEnabled = c.get("Options", "Use old Dream Bed method of getting to Sky Dimension", false).getBoolean(false);
         DreamPillowRecipe = c.get("Options", "Enable Dream Pillow recipe (Only applies if Dream Bed method is disabled)", false).getBoolean(false);
         DreamChance = c.get("Options", "Percent chance out of 100 of going to Sky Dimension on sleep. Only applies if Dream Bed Method is disabled", 12).getInt();
         DaytimeBed = c.get("Options", "Can go to Sky Dimension without Restrictions (Daytime, Monsters nearby).", false).getBoolean(false);
@@ -340,8 +338,6 @@ public class mod_Rediscovered
 		dirtDoubleSlab1 = registerBlock(DirtDoubleSlab, ItemBlockDirtSlab.class, DirtSlab, DirtDoubleSlab);
 		Scarecrow = (new ItemScarecrow("Scarecrow")).setCreativeTab(CreativeTabs.tabDecorations).setUnlocalizedName("Scarecrow").setTextureName(modid + ":Scarecrow");
 		DreamPillow = (new ItemDreamPillow("DreamPillow")).setCreativeTab(CreativeTabs.tabMisc).setUnlocalizedName("DreamPillow").setTextureName(modid + ":DreamPillow");
-		DreamBedItem = (new ItemDreamBed("DreamBedItem")).setCreativeTab(CreativeTabs.tabDecorations).setUnlocalizedName("DreamBedItem").setTextureName(modid + ":DreamBedItem");
-        DreamBed = (new BlockDreamBed()).setHardness(0.2F).setStepSound(Block.soundTypeCloth).setBlockName("DreamBed").setBlockTextureName(modid + ":" + "cryingobsidian");
 		Rose = (new BlockRose(0)).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("rose").setBlockTextureName(modid + ":" + "rose");
 		EmptyRoseBush = (BlockEmptyRoseBush)(new BlockEmptyRoseBush(0)).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("empty_rose_bush").setBlockTextureName(modid + ":" + "empty_rose_bottom");
 		EmptyRoseBushTop = (new BlockEmptyRoseBushTop()).setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("empty_rose_bush").setBlockTextureName(modid + ":" + "empty_rose_top");
@@ -490,25 +486,14 @@ public class mod_Rediscovered
                     " P ", "SHS", " S ", 'S', Items.stick, 'H', Blocks.hay_block, 'P', Blocks.pumpkin
                 }));
         
-        if(DreamBedEnabled){
-        	GameRegistry.registerItem(DreamBedItem, "rediscovered_dreambeditem");
-        	GameRegistry.registerBlock(DreamBed, "DreamBed");
-        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(DreamBedItem, 1), true, new Object[]
+        GameRegistry.registerItem(DreamPillow, "rediscovered_dreampillow");
+        if(DreamPillowRecipe){
+        	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(DreamPillow, 1), true, new Object[]
                     {
-                        "   ", "WWW", "OGO", 'G', Blocks.glowstone, 'W', new ItemStack(Blocks.wool, 1, 11), 'O', "plankWood"
+                        "WWW", "WGW", "WWW", 'G', Items.glowstone_dust, 'W', new ItemStack(Blocks.wool, 1, 11)
                     }));
-        }
-        else{
-        	GameRegistry.registerItem(DreamPillow, "rediscovered_dreampillow");
-        	if(DreamPillowRecipe){
-        		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(DreamPillow, 1), true, new Object[]
-                        {
-                            "WWW", "WGW", "WWW", 'G', Items.glowstone_dust, 'W', new ItemStack(Blocks.wool, 1, 11)
-                        }));
-        	}
-        }
-        
-        
+       	}
+
         GameRegistry.registerBlock(DragonEggRed, "DragonEggRed");
         
         GameRegistry.registerBlock(RubyOre, "RubyOre");

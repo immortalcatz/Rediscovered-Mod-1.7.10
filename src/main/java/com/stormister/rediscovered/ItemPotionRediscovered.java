@@ -101,7 +101,7 @@ public class ItemPotionRediscovered extends Item
 
             if (!worldIn.isRemote)
             {
-//                worldIn.spawnEntityInWorld(new EntityRediscoveredPotion(worldIn, playerIn, itemStackIn));
+                worldIn.spawnEntityInWorld(new EntityRediscoveredPotion(worldIn, playerIn, itemStackIn));
             }
 
             return itemStackIn;

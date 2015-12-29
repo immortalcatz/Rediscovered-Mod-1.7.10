@@ -101,23 +101,7 @@ public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4
 				  double var24 = (double) var23 + 0.5D - par1Entity.posZ;
 				  for (int var26 = this.field_85192_a.getActualHeight() - 1; var26 >= 0; --var26)
 				  {
-					  if (mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var48, var26, var23).equals(mod_Rediscovered.DreamBed))
-					  {
-						  while (this.field_85192_a.getBlock(var48, var26 - 1, var23).equals(mod_Rediscovered.DreamBed))
-						  {
-							  --var26;
-						  }
-						  var27 = (double) var26 + 0.5D - par1Entity.posY;
-						  double var29 = var21 * var21 + var27 * var27 + var24 * var24;
-						  if (var10 < 0.0D || var29 < var10)
-						  {
-							  var10 = var29;
-							  var12 = var48;
-							  var13 = var26;
-							  var14 = var23;
-						  }
-					  }
-					  else if (!mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var48, var26, var23).equals(Blocks.bed))
+					  if (this.field_85192_a.getBlock(var48, var26, var23).equals(Blocks.bed))
 					  {
 						  while (this.field_85192_a.getBlock(var48, var26 - 1, var23).equals(Blocks.bed))
 						  {
@@ -148,19 +132,19 @@ public boolean placeInExistingPortal(Entity par1Entity, double par2, double par4
 		   double var25 = (double) var13 + 0.5D;
 		   var27 = (double) var14 + 0.5D;
 		   int var50 = -1;
-		   if ((mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 - 1, var13, var14) == mod_Rediscovered.DreamBed) || (!mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed))
+		   if (this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed)
 		   {
 			   var50 = 2;
 		   }
-		   if ((mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 + 1, var13, var14).equals(mod_Rediscovered.DreamBed)) || (!mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed))
+		   if (this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed)
 		   {
 			   var50 = 0;
 		   }
-		   if ((mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12, var13, var14 - 1).equals(mod_Rediscovered.DreamBed)) || (!mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed))
+		   if (this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed)
 		   {
 			   var50 = 3;
 		   }
-		   if ((mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12, var13, var14 + 1).equals(mod_Rediscovered.DreamBed)) || (!mod_Rediscovered.DreamBedEnabled && this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed))
+		   if (this.field_85192_a.getBlock(var12 - 1, var13, var14) == Blocks.bed)
 		   {
 		        var50 = 1;
 		   }

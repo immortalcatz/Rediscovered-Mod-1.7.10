@@ -24,10 +24,7 @@ public class WorldGenSkySpawn extends WorldGenerator
 	   
 		   	Block planks = Blocks.planks;
 		   	Block bed;
-			   if(mod_Rediscovered.DreamBedEnabled)
-				   bed = mod_Rediscovered.DreamBed;
-			   else
-				   bed = Blocks.bed;
+			bed = Blocks.bed;
 		   	Block chair = mod_Rediscovered.Chair;
 		   	Block table = mod_Rediscovered.Table;
 		   	Block crafting = Blocks.crafting_table;

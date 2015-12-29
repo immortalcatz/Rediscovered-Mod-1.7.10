@@ -68,6 +68,7 @@ public class ClientProxyRediscovered extends CommonProxyRediscovered
     	RenderingRegistry.instance().registerEntityRenderingHandler(com.stormister.rediscovered.EntityParrow.class, new RenderParrow());
     	RenderingRegistry.instance().registerEntityRenderingHandler(com.stormister.rediscovered.EntityGiant.class, new RenderGiant(new ModelZombie(), 0.5F, 6.0F));
     	RenderingRegistry.instance().registerEntityRenderingHandler(com.stormister.rediscovered.EntityScarecrow.class, new RenderScarecrow(new ModelScarecrow(), 0.5F));
+    	RenderingRegistry.instance().registerEntityRenderingHandler(com.stormister.rediscovered.EntityRediscoveredPotion.class, new RenderRediscoveredPotion());
     	
 //		MinecraftForge.EVENT_BUS.register(new Ambiance());
 	}

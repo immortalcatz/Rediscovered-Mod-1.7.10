@@ -68,7 +68,7 @@ public class RediscoveredEventHandler
 		InventoryPlayer inv = player.inventory;
 		ItemStack itemStack = inv.getStackInSlot(inv.currentItem);
 		World world = event.entityLiving.worldObj;
-		if(!mod_Rediscovered.DreamBedEnabled && player.dimension == 0 && !world.isDaytime() && itemRand.nextInt(100)<=mod_Rediscovered.DreamChance && (itemStack == null || itemStack.getItem() != mod_Rediscovered.DreamPillow) && player instanceof EntityPlayerMP)
+		if(player.dimension == 0 && !world.isDaytime() && itemRand.nextInt(100)<=mod_Rediscovered.DreamChance && (itemStack == null || itemStack.getItem() != mod_Rediscovered.DreamPillow) && player instanceof EntityPlayerMP)
 		{
 			ExtendedPlayer props = ExtendedPlayer.get((EntityPlayer) event.entity);
 			props.setRespawn(event.x, event.y, event.z);
@@ -120,7 +120,7 @@ public class RediscoveredEventHandler
 		ItemStack itemStack = inv.getStackInSlot(inv.currentItem);
 		final World world = (World) event.entityLiving.worldObj;
 
-		if(!event.entityLiving.worldObj.isRemote && event.action == event.action.RIGHT_CLICK_BLOCK && world.getBlock(event.x, event.y, event.z) == Blocks.bed && ((itemStack != null && itemStack.getItem() == mod_Rediscovered.DreamPillow && player.dimension == 0 && !mod_Rediscovered.DreamBedEnabled && (mod_Rediscovered.DaytimeBed || (!mod_Rediscovered.DaytimeBed && !world.isDaytime()))) || (player.dimension == mod_Rediscovered.DimID && !mod_Rediscovered.DreamBedEnabled)) && player instanceof EntityPlayerMP){
+		if(!event.entityLiving.worldObj.isRemote && event.action == event.action.RIGHT_CLICK_BLOCK && world.getBlock(event.x, event.y, event.z) == Blocks.bed && ((itemStack != null && itemStack.getItem() == mod_Rediscovered.DreamPillow && player.dimension == 0 && (mod_Rediscovered.DaytimeBed || (!mod_Rediscovered.DaytimeBed && !world.isDaytime()))) || (player.dimension == mod_Rediscovered.DimID)) && player instanceof EntityPlayerMP){
         	event.setCanceled(true);
 			EntityPlayerMP thePlayer = (EntityPlayerMP) player;
 			ExtendedPlayer props = ExtendedPlayer.get((EntityPlayer) event.entity);
@@ -356,7 +356,7 @@ public class RediscoveredEventHandler
     public static ChunkCoordinates verifyRespawnCoordinates(World par0World, ChunkCoordinates par1ChunkCoordinates, boolean par2, EntityPlayerMP player)
     {
 //    	player.addChatComponentMessage(new ChatComponentText("" + player.mcServer.worldServerForDimension(0).getBlock(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ)));
-        if (player.mcServer.worldServerForDimension(0).getBlock(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ)== Blocks.bed || player.mcServer.worldServerForDimension(0).getBlock(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ) == mod_Rediscovered.DreamBed)
+        if (player.mcServer.worldServerForDimension(0).getBlock(par1ChunkCoordinates.posX, par1ChunkCoordinates.posY, par1ChunkCoordinates.posZ)== Blocks.bed)
         {
             return par1ChunkCoordinates;
         }
