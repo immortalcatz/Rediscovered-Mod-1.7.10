@@ -30,6 +30,8 @@ public class ItemQuiver extends ItemArmor
 			this.itemIcon = reg.registerIcon(mod_Rediscovered.modid + ":IQuiver");
 		if(this == mod_Rediscovered.DiamondQuiver)
 			this.itemIcon = reg.registerIcon(mod_Rediscovered.modid + ":DQuiver");
+		if(this == mod_Rediscovered.LeatherChainQuiver)
+			this.itemIcon = reg.registerIcon(mod_Rediscovered.modid + ":SQuiver");
 	}
     
     @Override
@@ -52,6 +54,9 @@ public class ItemQuiver extends ItemArmor
         }
     	if(stack.getItem().equals(mod_Rediscovered.DiamondQuiver)){
 			return mod_Rediscovered.modid + ":textures/models/DiamondQuiver_1.png";
+        }
+    	if(stack.getItem().equals(mod_Rediscovered.LeatherChainQuiver)){
+			return mod_Rediscovered.modid + ":textures/models/StuddedQuiver_1.png";
         }
             
         else return null;

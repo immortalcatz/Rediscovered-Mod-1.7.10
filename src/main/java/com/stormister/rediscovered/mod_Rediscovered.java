@@ -104,6 +104,9 @@ import cpw.mods.fml.relauncher.Side;
 /*
  * Current Changelog - 1.3
  * -Added splash potions and changed how current potions work
+ * -Changed rotating gear animation
+ * -Changed Leather-Chain to Studded
+ * -Added Studded Chestplate with quiver
  * -Removed dream bed option entirely
  */
 
@@ -135,6 +138,7 @@ public class mod_Rediscovered
     public static Item GoldQuiver;
     public static Item IronQuiver;
     public static Item DiamondQuiver;
+    public static Item LeatherChainQuiver;
     public static Item LeatherChainHelmet;
     public static Item LeatherChainChest;
     public static Item LeatherChainLegs;
@@ -179,6 +183,7 @@ public class mod_Rediscovered
     public static int GiantSpawn;
     public static int FishSpawn;
     public static int PurpleArrowID;
+    public static int PotionID;
     public static int MountableBlockID;
     public static int RanaID;
     public static int SteveID;
@@ -241,6 +246,7 @@ public class mod_Rediscovered
 
         //IDs
         PurpleArrowID = c.get("ID's", "Purple Arrow ID (-1 means it will automatically assign an ID)", -1).getInt();
+        PotionID = c.get("ID's", "Thrown Potion ID (-1 means it will automatically assign an ID)", -1).getInt();
         MountableBlockID = c.get("ID's", "Mountable Block ID (-1 means it will automatically assign an ID)", -1).getInt();
         RanaID = c.get("ID's", "Rana ID (-1 means it will automatically assign an ID)", -1).getInt();
         SteveID = c.get("ID's", "Steve ID (-1 means it will automatically assign an ID)", -1).getInt();
@@ -306,6 +312,7 @@ public class mod_Rediscovered
 	        GoldQuiver = (new ItemQuiver( ArmorMaterial.GOLD, 0, 1)).setUnlocalizedName("GoldQuiver").setContainerItem(Quiver).setCreativeTab(CreativeTabs.tabCombat);
 	        IronQuiver = (new ItemQuiver( ArmorMaterial.IRON, 0, 1)).setUnlocalizedName("IronQuiver").setContainerItem(Quiver).setCreativeTab(CreativeTabs.tabCombat);
 	        DiamondQuiver = (new ItemQuiver( ArmorMaterial.DIAMOND, 0, 1)).setUnlocalizedName("DiamondQuiver").setContainerItem(Quiver).setCreativeTab(CreativeTabs.tabCombat);
+	        LeatherChainQuiver = (new ItemQuiver( EnumArmorMaterialLC, 0, 1)).setUnlocalizedName("LeatherChainQuiver").setContainerItem(Quiver).setCreativeTab(CreativeTabs.tabCombat);
         }
         LeatherChainHelmet = (new ItemLC( EnumArmorMaterialLC, 0, 0)).setUnlocalizedName("LeatherChainHelmet").setCreativeTab(CreativeTabs.tabCombat);
         LeatherChainChest = (new ItemLC( EnumArmorMaterialLC, 0, 1)).setUnlocalizedName("LeatherChainChest").setCreativeTab(CreativeTabs.tabCombat);
@@ -358,6 +365,7 @@ public class mod_Rediscovered
         heaven = (new BiomeGenSky(HeavenBiomeID)).setColor(16421912).setBiomeName("Heaven").setDisableRain();
 
         registerRediscoveredMob(EntityParrow.class, "ParrowRediscovered", PurpleArrowID);
+        registerRediscoveredMob(EntityRediscoveredPotion.class, "PotionRediscovered", PotionID);
         registerRediscoveredMob(EntityMountableBlock.class, "EntityMountableBlockRediscovered", MountableBlockID);
         registerRediscoveredMob(EntityRana.class, "RanaRediscovered", 0x4c7129, 0xf0a5a2, RanaID);
         registerRediscoveredMob(EntitySteve.class, "SteveRediscovered", 44975, 0xf6b201, SteveID);
@@ -407,6 +415,10 @@ public class mod_Rediscovered
 	        GameRegistry.registerItem(DiamondQuiver, "rediscovered_diamondquiver");
 	        GameRegistry.addShapelessRecipe(new ItemStack(DiamondQuiver, 1), new Object[]{Quiver, Items.diamond_chestplate});
 	        GameRegistry.addShapedRecipe(new ItemStack(Items.diamond_chestplate), "Q", 'Q', DiamondQuiver);
+	        
+	        GameRegistry.registerItem(LeatherChainQuiver, "rediscovered_leatherchainquiver");
+	        GameRegistry.addShapelessRecipe(new ItemStack(LeatherChainQuiver, 1), new Object[]{Quiver, LeatherChainChest});
+	        GameRegistry.addShapedRecipe(new ItemStack(LeatherChainChest), "Q", 'Q', LeatherChainQuiver);
         }
         
         GameRegistry.registerItem(LeatherChainHelmet, "rediscovered_leatherchainhelmet");
